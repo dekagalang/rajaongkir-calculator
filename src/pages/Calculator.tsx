@@ -1,8 +1,7 @@
-
-import { useEffect } from 'react';
-import PageTransition from '@/components/layout/PageTransition';
-import Navbar from '@/components/layout/Navbar';
-import Calculator from '@/components/shipping/Calculator';
+import { useEffect } from "react";
+import PageTransition from "@/components/layout/PageTransition";
+import Navbar from "@/components/layout/Navbar";
+import Calculator from "@/components/shipping/Calculator";
 
 const CalculatorPage = () => {
   useEffect(() => {
@@ -13,7 +12,6 @@ const CalculatorPage = () => {
     <PageTransition>
       <div className="min-h-screen flex flex-col">
         <Navbar />
-        
         <main className="flex-1 pt-24 pb-16 px-4">
           <div className="container mx-auto max-w-6xl">
             <div className="text-center mb-8">
