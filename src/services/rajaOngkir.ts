@@ -1,6 +1,7 @@
 import { toast } from "@/components/ui/use-toast";
 
-const PROVINCE_API_URL = "https://node-api-appsvrs-projects.vercel.app/province";
+const PROVINCE_API_URL =
+  "https://node-api-appsvrs-projects.vercel.app/province";
 const CITY_API_URL = "https://node-api-appsvrs-projects.vercel.app/city";
 const COST_API_URL = "https://node-api-appsvrs-projects.vercel.app/cost";
 
@@ -46,11 +47,11 @@ export interface ShippingCost {
 export const fetchProvinces = async (): Promise<Province[]> => {
   try {
     const response = await fetch(PROVINCE_API_URL);
-    
+
     if (!response.ok) {
       throw new Error(`API error: ${response.status}`);
     }
-    
+
     const data = await response.json();
     return data.rajaongkir.results;
   } catch (error) {
@@ -58,7 +59,7 @@ export const fetchProvinces = async (): Promise<Province[]> => {
     toast({
       title: "Error",
       description: "Failed to fetch provinces. Please try again.",
-      variant: "destructive"
+      variant: "destructive",
     });
     return [];
   }
@@ -68,26 +69,28 @@ export const fetchCities = async (provinceId?: string): Promise<City[]> => {
   try {
     const url = CITY_API_URL;
     const response = await fetch(url);
-    
+
     if (!response.ok) {
       throw new Error(`API error: ${response.status}`);
     }
-    
+
     const data = await response.json();
-    
+
     if (provinceId) {
-      return data.rajaongkir.results.filter((city: City) => city.province_id === provinceId);
+      return data.rajaongkir.results.filter(
+        (city: City) => city.province_id === provinceId
+      );
     }
-    
+
     return data.rajaongkir.results;
   } catch (error) {
     console.error("Failed to fetch cities:", error);
     toast({
       title: "Error",
       description: "Failed to fetch cities. Please try again.",
-      variant: "destructive"
+      variant: "destructive",
     });
-    
+
     return [];
   }
 };
@@ -100,53 +103,47 @@ export const calculateShipping = async (
 ): Promise<CourierResult[] | null> => {
   try {
     const response = await fetch(COST_API_URL, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         origin: originId,
         destination: destinationId,
         weight: Math.ceil(weight * 1000),
-        courier: courier
-      })
+        courier: courier,
+      }),
     });
-    
+
     if (!response.ok) {
       throw new Error(`API error: ${response.status}`);
     }
-    
+
     const data = await response.json();
-    
+
     if (data.rajaongkir.status.code !== 200) {
       throw new Error(data.rajaongkir.status.description);
     }
-    
+
     return data.rajaongkir.results;
   } catch (error) {
     console.error("Failed to calculate shipping:", error);
     toast({
       title: "Error",
       description: "Failed to calculate shipping cost. Please try again.",
-      variant: "destructive"
+      variant: "destructive",
     });
-    
+
     return null;
   }
 };
 
-// Get calculation history from localStorage
 export const getCalculationHistory = (): ShippingCost[] => {
   try {
-    const historyString = localStorage.getItem('shippingHistory');
+    const historyString = localStorage.getItem("shippingHistory");
     return historyString ? JSON.parse(historyString) : [];
   } catch (error) {
     console.error("Failed to get calculation history:", error);
     return [];
   }
-};
-
-// Clear calculation history
-export const clearCalculationHistory = (): void => {
-  localStorage.removeItem('shippingHistory');
 };
