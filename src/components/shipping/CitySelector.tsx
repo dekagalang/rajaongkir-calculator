@@ -1,6 +1,5 @@
-
-import { useState, useEffect } from 'react';
-import { 
+import { useState, useEffect } from "react";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -8,8 +7,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { City, Province, fetchProvinces, fetchCities } from '@/services/rajaOngkir';
-import { motion } from 'framer-motion';
+import {
+  City,
+  Province,
+  fetchProvinces,
+  fetchCities,
+} from "@/services/rajaOngkir";
+import { motion } from "framer-motion";
 
 interface CitySelectorProps {
   label: string;
@@ -23,7 +27,6 @@ const CitySelector = ({ label, value, onChange }: CitySelectorProps) => {
   const [selectedProvinceId, setSelectedProvinceId] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // Fetch provinces on mount
   useEffect(() => {
     const getProvinces = async () => {
       setIsLoading(true);
@@ -31,34 +34,31 @@ const CitySelector = ({ label, value, onChange }: CitySelectorProps) => {
       setProvinces(data);
       setIsLoading(false);
     };
-    
+
     getProvinces();
   }, []);
 
-  // Fetch cities when province is selected
   useEffect(() => {
     if (!selectedProvinceId) return;
-    
+
     const getCities = async () => {
       setIsLoading(true);
       const data = await fetchCities(selectedProvinceId);
       setCities(data);
       setIsLoading(false);
     };
-    
+
     getCities();
   }, [selectedProvinceId]);
 
-  // Handle province selection
   const handleProvinceChange = (provinceId: string) => {
     setSelectedProvinceId(provinceId);
     setCities([]);
-    onChange(null as any); // Reset city when province changes
+    onChange(null as never);
   };
 
-  // Handle city selection
   const handleCityChange = (cityId: string) => {
-    const selectedCity = cities.find(city => city.city_id === cityId);
+    const selectedCity = cities.find((city) => city.city_id === cityId);
     if (selectedCity) {
       onChange(selectedCity);
     }
@@ -67,8 +67,7 @@ const CitySelector = ({ label, value, onChange }: CitySelectorProps) => {
   return (
     <div className="space-y-3">
       <Label>{label}</Label>
-      
-      {/* Province selector */}
+
       <div className="space-y-1">
         <Label className="text-xs text-muted-foreground">Provinsi</Label>
         <Select
@@ -81,17 +80,19 @@ const CitySelector = ({ label, value, onChange }: CitySelectorProps) => {
           </SelectTrigger>
           <SelectContent>
             {provinces.map((province) => (
-              <SelectItem key={province.province_id} value={province.province_id}>
+              <SelectItem
+                key={province.province_id}
+                value={province.province_id}
+              >
                 {province.province}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
       </div>
-      
-      {/* City selector - only show if province is selected */}
+
       {selectedProvinceId && (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}

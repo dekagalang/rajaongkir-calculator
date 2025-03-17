@@ -22,7 +22,6 @@ const CalculatorPage = () => {
                 Hitung biaya pengiriman antar kota di Indonesia
               </p>
             </div>
-            
             <Calculator />
           </div>
         </main>
