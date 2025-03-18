@@ -9,7 +9,6 @@ Aplikasi untuk menghitung biaya pengiriman di Indonesia menggunakan API RajaOngk
 - 🔄 **Pemilihan Kota Intuitif** - Pilih provinsi terlebih dahulu, lalu kota, untuk sistem pencarian yang lebih efisien.
 - 📱 **Tampilan Responsif** - Desain yang optimal di perangkat desktop maupun mobile.
 - 🔐 **Fitur Autentikasi** - Daftar dan masuk untuk menyimpan riwayat perhitungan pengiriman.
-- 📊 **Riwayat Pengiriman** - Lihat dan kelola riwayat perhitungan biaya pengiriman yang telah dilakukan.
 - ✨ **Animasi Modern** - Antarmuka yang menarik dengan efek glass-morphism dan animasi transisi.
 
 ## Teknologi
@@ -34,7 +33,7 @@ Sebelum mulai, pastikan Anda memiliki:
 1. **Clone repository**
 
 ```bash
-git clone <URL_REPOSITORY>
+git clone git@github.com:dekagalang/rajaongkir-calculator.git
 cd rajaongkir-calculator
 ```
 
@@ -82,7 +81,7 @@ Buka browser dan akses `http://localhost:8080`
 src/
 ├── components/          # Komponen reusable
 │   ├── auth/            # Komponen autentikasi
-│   ├── layout/          # Komponen layout (navbar, footer)
+│   ├── layout/          # Komponen layout
 │   ├── shipping/        # Komponen untuk pengiriman
 │   └── ui/              # Komponen UI dasar (button, input, dll)
 ├── context/             # React Context untuk state management
@@ -104,11 +103,7 @@ src/
 2. **Autentikasi**
    - Daftar dengan nama, email, dan kata sandi
    - Masuk dengan email dan kata sandi
-   - Riwayat pengiriman hanya tersedia untuk pengguna yang sudah login
-
-3. **Halaman Dashboard**
-   - Lihat dan kelola riwayat perhitungan biaya pengiriman
-   - Hapus riwayat yang tidak diinginkan
+   - Halaman dashboard hanya tersedia untuk pengguna yang sudah login
 
 ## Pengembangan Lanjutan
 
